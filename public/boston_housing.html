@@ -13298,9 +13298,22 @@ Standard deviation of prices: $165171.13154429474
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><code>'RM'</code>: Increasing the avg. number of rooms will increase the value (<code>'MEDV'</code>). Decreasing will decrease. Related.</li>
-<li><code>'LSTAT'</code>: Higher percent of working poor will decrease the value. Lower will increase. Inversely related.</li>
-<li><code>'PTRATIO'</code>: Low student-to-teacher ratio will increase the value. Higher will decrease. Inversely related.</li>
+<li><code>'RM'</code>: Increasing the avg. number of rooms will increase the value (<code>'MEDV'</code>). Decreasing will decrease. Related.<ul>
+<li>More rooms means larger footprint for the home (more construction materials).</li>
+<li>Many rooms are desirable for families, who have stable &amp; established incomes</li>
+</ul>
+</li>
+<li><code>'LSTAT'</code>: Higher percent of working poor will decrease the value. Lower will increase. Inversely related.<ul>
+<li>High number of working poor indicates less funds available in the community for local initiatives</li>
+<li>Areas with high numbers of working poor are less desirable</li>
+</ul>
+</li>
+<li><code>'PTRATIO'</code>: Low student-to-teacher ratio will increase the value. Higher will decrease. Inversely related.<ul>
+<li>Low ratio implies more time a teacher can give each individual student</li>
+<li>Likely associated with a well-funded school</li>
+<li>Good schools are highly sought after for families starting out</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -13446,9 +13459,10 @@ Standard deviation of prices: $165171.13154429474
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer:</strong> R_2=92.3%</p>
+<p><strong>Answer:</strong> R^2=92.3%</p>
 <p>The current score means that 92.3% indicates that the variable is very predictable from the dependent variable (very close to 100%). The variable can be explained fairly well by the developed model.</p>
 <p>The datasets we are working with are fairly small (#5), so that should be noted when making the assertion that the model has "captured" the variation of the target variable.</p>
+<p>In this case, almost all of the data points (<code>Y</code>) are very close to the predicted points (<code>Y'</code>). The R^2 score reflects this close accuracy by sitting at <code>92.3%</code>.</p>
 
 </div>
 </div>
@@ -13520,9 +13534,12 @@ Standard deviation of prices: $165171.13154429474
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>Ensuring the model can generalize. How we train the model greatly impacts how well it will perform on test data. If we simply provided it all of the data for training, the model runs the risk of memorizing the training data. This is overfitting, and will perform poorly when faced with new data.</p>
-<p>When we provide too little data, the model will have insufficient data to properly generalize.</p>
-<p>When we split the training and test data into subsets, we make it easier to generalize as we reduce the potential risks of either underfitting or overfitting the data. The important thing about this approach, is that we aim to perform better than the underfitting and overfitting models. We are after the 'just right' model.</p>
+<p>Ensuring the model can generalize. How we train the model greatly impacts how well it will perform on test data.</p>
+<p>If we simply provided it all of the data for training, the model runs the risk of overfitting. Overfitting is where the model is overly complex and is trying to memorize the training data. As a result, this does not generalize well on the test data.</p>
+<p>When we provide too little training data, the model will have insufficient data to properly learn from the training set. This doesn't perform well on either data set, as it hasn't learn anything so can't make any good decisions.</p>
+<p>The test dataset is important for testing the model itself. If we did not split the data (as in the overfitting case mentioned above), then we run the risk of having a model that looks great on paper. It has a very high score, but has only really memorized the training data. When put up against new data, it will likely perform very poorly.</p>
+<p>The testing data is so that we can gain an understanding of the real performance of our model. We can't use any of the training data to test, as its something that the model has seen before (it was trained on it). Using training data to test is like using coursework for an exam. A student by memory could solve the problem, thus inflating their score.</p>
+<p>When we split the training and test data into subsets, we make it easier to generalize as we gain the ability to have insights into the performance of the model (in other words, did it generalize?).</p>
 
 </div>
 </div>
@@ -13720,9 +13737,10 @@ Think about the pros and cons of adding more training points based on if the tra
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>Grid Search Technique: A way to tune the parameter values in order to select the best models. Since we do not know the parameters that will work the best, we can do a search over these parameters.</p>
-<p>When we are training a model, we have to set hyperparameters. However, since we set these values before we start learning, its difficult to know what values are best. With Grid Search we can find the best values for hyperparameters, which we will then use in the model.</p>
-<p>For example, if we are working with SVM, we need to figure out which: kernel function, C value, gamma, etc. With GST, we can experiment with multiple parameter combinations to search for what works best (e.g. <code>[poly,rbf]</code> and <code>[0.1,1,10]</code>)</p>
+<p>Grid Search Technique: A way to tune the hyper-parameter values of a model. Hyper-parameters are parameters that are not directly learnt with estimators.</p>
+<p>Grid Search works by receiving the hyer-parameters that we want to tune. These are passed in with potential values that we are working to work with (e.g. for SVM: <code>parameters = {'kernel':['poly', 'rbf'],'C':[0.1, 1, 10]}</code>). A performance metric is passed in along with the parameters (for example: <code>score = make_scorer(f1_score)</code>) to determine the performance of the models.</p>
+<p>The algorithm will then create a grid of all possible hyper-parameter combinations (e.g. <code>[{poly,0.1},{poly,1},{poly,10}, ... ]</code>), then evaluate the performance of each of the models (using the provided performance scorer). The output will then be the hyper-parameter combination that yielded the best result (e.g. <code>kernel:poly, C:1</code>).</p>
+<p>With the outputs from GridSearch, we can used these tuned hyper-parameters for the final model.</p>
 
 </div>
 </div>
@@ -13746,10 +13764,9 @@ Think about the pros and cons of adding more training points based on if the tra
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>Given a dataset, we split it into a testing set and training set. This means that we only have 1 dataset to train with, which can be a problem (as seen with under/over fitting). We want a good fit model, not just any old model.</p>
-<p>Cross-validation is a technique where we split the data into multiple groups. In this case, <code>k</code> represents the number of groups, or in other words, the number of times we are going to train our model. We use <code>k-1</code> of these groups for training, and the rest for cross-validation. Each iteration we use a different part for training, and one part for cross-validation (the validation part changes each time).</p>
-<p>We determine the score of cross-validation in <code>k</code> times by the average. This score determines how good the model is.</p>
-<p>GS: When we are working with Grid Search, we have a set of hyperparameters for which we want to search for the best score. With a normal data split, we have the risk of getting hyperparameters that are tightly coupled to the split we performed on the testing/training data. With <code>k</code> groups, we can use the average to better select the hyerparameters.</p>
+<p>Cross-validation is a technique where we split our data set into training and test. Then we split the training data into multiple folds (<code>k</code>). We use <code>k-1</code> of these for training our model and the final fold (<code>1</code>) for cross-validation. We repeat this process <code>k</code> times, each time with a different cross-validation set. The average cross-validation score is used to determine how good the model is. Finally once you have selected the best parameters using Grid Search, we can use the test set to check the performance of the model.</p>
+<p>GridSearch: Given a dataset, we split it into a testing set and training set. This means that we can only use the training data for training, and testing for testing. This can be a problem, as this split can influence which hyperparameters are selected by GridSearch. What k-fold cross validation training technique allows for is us to make use of every entry in the training data for both training and validation. GridSearch can then be used to select the best parameters along with k-fold cross validation.</p>
+<p>Finally once the parameters are selected, we can use the test data to check the performance of the final model.</p>
 
 </div>
 </div>
