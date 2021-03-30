@@ -1,0 +1,15 @@
+slug: boston-housing
+description: Leverage a few basic machine learning concepts to assist you and a client with finding the best selling price for their home.
+project: udacity
+namespace:
+status: archived
+icon: icon.svg
+license:
+  type: MIT
+  content: Jonathan Beverly <jrbeverly>
+  year: 2020
+topics: |-
+  [
+    "udacity-mlnd",
+    "boston-housing-price-prediction"
+  ]
